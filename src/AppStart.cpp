@@ -30,7 +30,7 @@ void App::Start() {
     m_Root.AddChild(m_Bee);
 
     for (int i = 0; i < 3; ++i) {
-        m_Doors.push_back(std::make_shared<Character>(GA_RESOURCE_DIR"/Image/Character/door_open.png"));
+        m_Doors.push_back(std::make_shared<Character>(GA_RESOURCE_DIR"/Image/Character/door_close.png"));
         m_Doors[i]->SetZIndex(5);
         m_Doors[i]->SetPosition({205.5f - 80.f * i, -3.5f});
         m_Doors[i]->SetVisible(false);
