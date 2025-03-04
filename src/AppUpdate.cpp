@@ -13,28 +13,49 @@ void App::Update() {
     */
     if (Util::Input::IsKeyPressed(Util::Keycode::UP)) {
         const glm::vec2& pos=m_Giraffe->GetPosition();
-        m_Giraffe->SetPosition(glm::vec2(pos.x, pos.y+1));
+        m_Giraffe->SetPosition(glm::vec2(pos.x, pos.y+3));
     }
     if (Util::Input::IsKeyPressed(Util::Keycode::DOWN)) {
         const glm::vec2& pos=m_Giraffe->GetPosition();
-        m_Giraffe->SetPosition(glm::vec2(pos.x, pos.y-1));
+        m_Giraffe->SetPosition(glm::vec2(pos.x, pos.y-3));
     }
     if (Util::Input::IsKeyPressed(Util::Keycode::LEFT)) {
         const glm::vec2& pos=m_Giraffe->GetPosition();
-        m_Giraffe->SetPosition(glm::vec2(pos.x-1, pos.y));
+        m_Giraffe->SetPosition(glm::vec2(pos.x-3, pos.y));
     }
     if (Util::Input::IsKeyPressed(Util::Keycode::RIGHT)) {
         const glm::vec2& pos=m_Giraffe->GetPosition();
-        m_Giraffe->SetPosition(glm::vec2(pos.x+1, pos.y));
+        m_Giraffe->SetPosition(glm::vec2(pos.x+3, pos.y));
     }
     if (Util::Input::IsKeyPressed(Util::Keycode::ESCAPE) || Util::Input::IfExit()) {
         m_CurrentState = State::END;
     }
-    if ((abs(m_Giraffe->GetPosition().x-m_Chest->GetPosition().x)<1)||(abs(m_Giraffe->GetPosition().y-m_Chest->GetPosition().y)<1)) {
+    if (((abs(m_Giraffe->GetPosition().x-m_Chest->GetPosition().x)<3)&&(abs(m_Giraffe->GetPosition().y-m_Chest->GetPosition().y)<3))&&m_Phase==Phase::COLLIDE_DETECTION) {
        m_Chest->SetVisible(false);
 
     }
+    if (m_Phase==Phase::BEE_ANIMATION) {
+        m_Bee->SetLooping(true);
+        m_Bee->SetPlaying(true);
 
+    }
+    for (int i=0;i<3;i++) {
+        const glm::vec2& Gpos=m_Giraffe->GetPosition();
+        const glm::vec2& Dpos=m_Doors[i]->GetPosition();
+        if (abs(Gpos.x-Dpos.x)<10 && abs(Gpos.y-Dpos.y)<15&&m_Phase==Phase::OPEN_THE_DOORS) {
+            m_Doors[i]->SetImage(GA_RESOURCE_DIR"/Image/Character/door_open.png");
+        }
+    }
+    if (m_Phase==Phase::COUNTDOWN) {
+        if (m_Ball->IfAnimationEnds()) {
+            m_Ball->SetVisible(false);
+            m_Ball->SetPlaying(false);
+        }else {
+            m_Ball->SetVisible(true);
+            m_Ball->SetPlaying(true);
+        }
+
+    }
 
 
     if (m_EnterDown) {

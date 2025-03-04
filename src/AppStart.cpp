@@ -23,7 +23,7 @@ void App::Start() {
         beeImages.emplace_back(GA_RESOURCE_DIR"/Image/Character/bee_" + std::to_string(i + 1) + ".png");
     }
 
-    m_Bee = std::make_shared<AnimatedCharacter>(beeImages);
+    m_Bee = std::make_shared<AnimatedCharacter>(beeImages,500);
     m_Bee->SetZIndex(5);
     m_Bee->SetVisible(false);
 
@@ -36,7 +36,16 @@ void App::Start() {
         m_Doors[i]->SetVisible(false);
         m_Root.AddChild(m_Doors[i]);
     }
-
+    std::vector<std::string> ballImages;
+    for (int i = 3; i >0; --i) {
+        ballImages.emplace_back(GA_RESOURCE_DIR"/Image/Character/ball-" + std::to_string(i) + ".png");
+        if (i==1){ballImages.emplace_back(GA_RESOURCE_DIR"/Image/Character/ball-ok.png");}
+    }
+    ballImages.emplace_back(GA_RESOURCE_DIR"/Image/Character/ball-ok.png");
+    m_Ball= std::make_shared<AnimatedCharacter>(ballImages,1000);
+    m_Ball->SetZIndex(5);
+    m_Ball->SetVisible(false);
+    m_Root.AddChild(m_Ball);
     // TODO: The counting down ball for phase 6
 
     m_PRM = std::make_shared<PhaseResourceManger>();

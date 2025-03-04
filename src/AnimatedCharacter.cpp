@@ -1,8 +1,8 @@
 #include "AnimatedCharacter.hpp"
 
 
-AnimatedCharacter::AnimatedCharacter(const std::vector<std::string>& AnimationPaths) {
-    m_Drawable = std::make_shared<Util::Animation>(AnimationPaths, true, 500, true, 0);
+AnimatedCharacter::AnimatedCharacter(const std::vector<std::string>& AnimationPaths,int interval) {
+    m_Drawable = std::make_shared<Util::Animation>(AnimationPaths, false, interval, false, 0);
 }
 
 bool AnimatedCharacter::IfAnimationEnds() const {
